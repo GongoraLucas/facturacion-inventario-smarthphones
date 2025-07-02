@@ -17,3 +17,7 @@ Content-Type: application/json
     "email":"lucas@gmail.com",
     "password":"123456"
 }
+
+### Protección de rutas
+GET http://localhost:5000/api/auth/perfil
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MTQyOTA2OSwiZXhwIjoxNzUyMDMzODY5fQ.zMnXpiFwmcP_S64qNu5eMdxV4dHdrcbTxyW7WgeRsd8

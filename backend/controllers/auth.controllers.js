@@ -66,7 +66,12 @@ const loginUser = async (req,res)=>{
     }
 }
 
+const getPerfil = (req,res)=>{
+    res.status(200).json({user:req.user})
+
+}
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getPerfil
 }
