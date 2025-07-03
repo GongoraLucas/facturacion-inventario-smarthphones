@@ -6,6 +6,7 @@ const authSlice = createSlice({
     name:"auth",
     initialState:{
         user:null,
+        isChecking:false,
         token:initialToken || null,
         isAuthenticated: !!initialToken,
     },
@@ -16,6 +17,15 @@ const authSlice = createSlice({
             state.token = action.payload.token
             state.isAuthenticated = true
             localStorage.setItem("token",action.payload.token)
+        
+        },
+
+        startChecking: (state,action)=>{
+            state.isChecking = true
+        },
+
+        stopChecking: (state,action)=>{
+            state.isChecking = false
         },
 
         logout: (state,action) =>{
@@ -30,7 +40,9 @@ const authSlice = createSlice({
 
 export const {
     loginSuccess,
-    logout
+    logout,
+    startChecking,
+    stopChecking
 
 } = authSlice.actions
 
