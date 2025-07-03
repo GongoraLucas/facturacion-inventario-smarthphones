@@ -9,6 +9,7 @@ const authSlice = createSlice({
         isChecking:false,
         token:initialToken || null,
         isAuthenticated: !!initialToken,
+        justLoggedIn:false,
     },
     reducers:{
 
@@ -17,6 +18,7 @@ const authSlice = createSlice({
             state.token = action.payload.token
             state.isAuthenticated = true
             localStorage.setItem("token",action.payload.token)
+            state.justLoggedIn = true
         
         },
 
@@ -33,6 +35,9 @@ const authSlice = createSlice({
             state.token = null
             state.isAuthenticated = false
             localStorage.removeItem("token")
+        },
+        clearJustLoggedIn: (state,action)=>{
+            state.justLoggedIn = false
         }
     }
 
@@ -42,7 +47,8 @@ export const {
     loginSuccess,
     logout,
     startChecking,
-    stopChecking
+    stopChecking,
+    clearJustLoggedIn
 
 } = authSlice.actions
 

@@ -3,20 +3,21 @@ import { useForm } from "../hooks/useForm"
 import { useState } from "react"
 import api from "../services/api"
 import { loginSuccess, startChecking, stopChecking } from "../redux/slices/authSlice"
-import { Alert, Box, Button, Container, TextField, Typography, useTheme } from "@mui/material"
-import { Link, useNavigate } from "react-router-dom"
+import { Alert, Box, Button, Container, Snackbar, TextField, Typography, useTheme } from "@mui/material"
+import { Link } from "react-router-dom"
 
 const initialForm = {
+    name:"",
     email: "",
     password: ""
 }
-export const LoginPage = () => {
+export const RegisterPage = () => {
     const theme = useTheme()
     const {isChecking } = useSelector(state => state.auth)
     const dispatch = useDispatch();
     const { email, password, onInputChange } = useForm(initialForm);
     const [error, setError] = useState("");
-
+    const [openSnack, setOpenSnack] = useState(false);
 
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -31,12 +32,19 @@ export const LoginPage = () => {
             const res = await api.post("/auth/login", { email, password });
             dispatch(loginSuccess(res.data));
             dispatch(stopChecking())
+            setOpenSnack(true)
+
 
         } catch (error) {
             setError(error.response?.data?.message || error.message)
             dispatch(stopChecking())
         }
 
+    }
+
+    const handleSnackClose = () => {
+        setOpenSnack(false)
+        //navigate("/dashboard")
     }
 
     return (
@@ -49,7 +57,7 @@ export const LoginPage = () => {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-            
+                p: 2
 
             }}
         >
@@ -74,7 +82,7 @@ export const LoginPage = () => {
                     }}
                 >
                     <Typography variant="h4" component="h2" align="center">
-                        Iniciar sesión
+                        Registrate
                     </Typography>
 
 
@@ -110,10 +118,18 @@ export const LoginPage = () => {
                     >
                         Entrar
                     </Button>
-                    <Typography align="right"> ¿No tienes una cuenta? <Link to="/auth/register">Registrate</Link> </Typography>
+                    <Typography align="right"> ¿Ya tienes una cuenta? <Link to="/auth/login">Inicia sesión</Link> </Typography>
                 </Box>
             </Container>
 
+            <Snackbar
+                open={openSnack}
+                autoHideDuration={2000}
+                onClose={handleSnackClose}
+                message="✅ Regitro exitoso"
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        
+            />
         </Box>
     )
 

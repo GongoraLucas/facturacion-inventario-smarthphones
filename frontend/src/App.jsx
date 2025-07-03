@@ -1,11 +1,12 @@
-import { LoginPage } from "./pages/LoginPage"
+
+import { AppRouter } from "./routes/AppRouter"
 
 
 export const App = () => {
   return (
     <>
 
-      <LoginPage />
+      <AppRouter/>
 
     </>
   )
