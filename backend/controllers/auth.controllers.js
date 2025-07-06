@@ -11,11 +11,6 @@ const generateToken = (id,role)=>{
 const registerUser = async (req,res,next)=>{
     const {name,email,password,role} = req.body;
 
-    if (password.trim().length <= 6 ) {
-        const error = new Error("Ingresa una constraseña de mas de 6 carácteres")
-        error.status = 400
-        return next(error)
-    }
     try{
         const existingUser = await User.findOne({email});
         if (existingUser) {

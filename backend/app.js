@@ -3,6 +3,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth.routes");
 const { errorHandler } = require("./middlewares/errorHandler");
 
+
 const app = express()
 
 //Middlewares
