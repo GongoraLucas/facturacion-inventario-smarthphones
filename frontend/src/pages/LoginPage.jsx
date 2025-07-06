@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { SignIn } from '../redux/thunks/authThunks';
+import {AnimationTitle} from '../components/AnimationTitle';
 
 const initialForm = {
   email: '',
@@ -53,9 +54,11 @@ export const LoginPage = () => {
         alignItems: 'center',
       }}
     >
-      <Typography variant="h3" component="h1" align="center" color="#fff">
-        Facturación y Gestión de Smartphones
-      </Typography>
+      <AnimationTitle
+        staticText="Smartphones"
+        animatedWords={["Facturación","Inventario"]}
+        duration={2500}
+      />
 
       <Container maxWidth="sm" sx={{ mt: 8 }}>
         <Box

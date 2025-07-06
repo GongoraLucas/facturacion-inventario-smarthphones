@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { register } from '../redux/thunks/authThunks';
+import { AnimationTitle } from '../components/AnimationTitle';
 
 const initialForm = {
   name: '',
@@ -59,9 +60,11 @@ export const RegisterPage = () => {
         p: 2,
       }}
     >
-      <Typography variant="h3" component="h1" align="center" color="#fff">
-        Facturación y Gestión de Smartphones
-      </Typography>
+      <AnimationTitle
+        staticText="Smartphones"
+        animatedWords={['Facturación', 'Inventario']}
+        duration={2500}
+      />
 
       <Container maxWidth="sm" sx={{ mt: 8 }}>
         <Box
@@ -120,8 +123,10 @@ export const RegisterPage = () => {
             sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
           >
             <Typography sx={{ marginRight: '20px' }}>Rol:</Typography>
-            <FormControlLabel control={<Radio />} label="administrador" value="admin" />
-            <FormControlLabel control={<Radio />} label="vendedor" value="vendedor" />
+            <Box>
+              <FormControlLabel control={<Radio />} label="administrador" value="admin" />
+              <FormControlLabel control={<Radio />} label="vendedor" value="vendedor" />
+            </Box>
           </RadioGroup>
 
           {error && <Alert severity="error">{error}</Alert>}

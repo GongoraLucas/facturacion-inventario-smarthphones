@@ -1,12 +1,7 @@
 import api from '../../services/api';
 import { loginSuccess, startChecking, stopChecking } from '../slices/authSlice';
 
-export const SignIn = (
-  email = '',
-  password = '',
-  setError = () => {},
-  showSnackbar = () => {}
-) => {
+export const SignIn = (email = '', password = '', setError = () => {}, showSnackbar = () => {}) => {
   return async (dispatch) => {
     try {
       dispatch(startChecking());
