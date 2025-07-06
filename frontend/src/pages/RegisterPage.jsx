@@ -3,19 +3,20 @@ import { useForm } from "../hooks/useForm"
 import { useState } from "react"
 import api from "../services/api"
 import { loginSuccess, startChecking, stopChecking } from "../redux/slices/authSlice"
-import { Alert, Box, Button, Container, Snackbar, TextField, Typography, useTheme } from "@mui/material"
+import { Alert, Box, Button, Checkbox, Container, FormControlLabel, FormGroup, Radio, RadioGroup, Snackbar, TextField, Typography, useTheme } from "@mui/material"
 import { Link } from "react-router-dom"
 
 const initialForm = {
-    name:"",
+    name: "",
     email: "",
-    password: ""
+    password: "",
+    role: "",
 }
 export const RegisterPage = () => {
     const theme = useTheme()
-    const {isChecking } = useSelector(state => state.auth)
+    const { isChecking } = useSelector(state => state.auth)
     const dispatch = useDispatch();
-    const { email, password, onInputChange } = useForm(initialForm);
+    const { name, email, password, role, onInputChange } = useForm(initialForm);
     const [error, setError] = useState("");
     const [openSnack, setOpenSnack] = useState(false);
 
@@ -23,28 +24,28 @@ export const RegisterPage = () => {
         evt.preventDefault();
         setError("");
 
-        if (!email || !password) {
+        if (!name || !email || !password || role === "") {
             return setError("Llene todos los campos");
         }
 
         try {
             dispatch(startChecking())
-            const res = await api.post("/auth/login", { email, password });
+            setOpenSnack(true)
+            const res = await api.post("/auth/register", { email, password, name, role});
             dispatch(loginSuccess(res.data));
             dispatch(stopChecking())
-            setOpenSnack(true)
 
 
         } catch (error) {
             setError(error.response?.data?.message || error.message)
             dispatch(stopChecking())
+            setOpenSnack(false)
         }
 
     }
 
     const handleSnackClose = () => {
         setOpenSnack(false)
-        //navigate("/dashboard")
     }
 
     return (
@@ -88,6 +89,16 @@ export const RegisterPage = () => {
 
 
                     <TextField
+                        label="Nombre"
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={onInputChange}
+                        disabled={isChecking}
+                        fullWidth
+                    />
+
+                    <TextField
                         label="Correo electrónico"
                         type="email"
                         name="email"
@@ -107,6 +118,33 @@ export const RegisterPage = () => {
                         fullWidth
                     />
 
+
+
+                    <RadioGroup
+                        name="role"
+                        value={role}
+                        onChange={onInputChange}
+                        disabled={isChecking}
+                        
+                        sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+                    >
+                        <Typography sx={{ marginRight: "20px" }} >
+                            Rol:
+                        </Typography>
+                        <FormControlLabel
+                            control={ <Radio /> }
+                            label="administrador"
+                            value="admin"
+
+                        />
+                        <FormControlLabel
+                            control={ < Radio />}
+                            label="vendedor"
+                            value="vendedor"
+
+                        />
+                    </RadioGroup>
+
                     {error && <Alert severity="error">{error}</Alert>}
 
                     <Button
@@ -116,7 +154,7 @@ export const RegisterPage = () => {
                         sx={{ mt: 1, height: '45px' }}
                         fullWidth
                     >
-                        Entrar
+                        Registrar
                     </Button>
                     <Typography align="right"> ¿Ya tienes una cuenta? <Link to="/auth/login">Inicia sesión</Link> </Typography>
                 </Box>
@@ -124,11 +162,11 @@ export const RegisterPage = () => {
 
             <Snackbar
                 open={openSnack}
-                autoHideDuration={2000}
+                autoHideDuration={1000}
                 onClose={handleSnackClose}
-                message="✅ Regitro exitoso"
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        
+                message="Cargando..."
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+
             />
         </Box>
     )

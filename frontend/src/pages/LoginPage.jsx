@@ -3,7 +3,7 @@ import { useForm } from "../hooks/useForm"
 import { useState } from "react"
 import api from "../services/api"
 import { loginSuccess, startChecking, stopChecking } from "../redux/slices/authSlice"
-import { Alert, Box, Button, Container, TextField, Typography, useTheme } from "@mui/material"
+import { Alert, Box, Button, Container, Snackbar, TextField, Typography, useTheme } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 
 const initialForm = {
@@ -12,10 +12,11 @@ const initialForm = {
 }
 export const LoginPage = () => {
     const theme = useTheme()
-    const {isChecking } = useSelector(state => state.auth)
+    const { isChecking } = useSelector(state => state.auth)
     const dispatch = useDispatch();
     const { email, password, onInputChange } = useForm(initialForm);
     const [error, setError] = useState("");
+    const [openSnack, setOpenSnack] = useState(false);
 
 
     const handleSubmit = async (evt) => {
@@ -28,6 +29,7 @@ export const LoginPage = () => {
 
         try {
             dispatch(startChecking())
+            setOpenSnack(true)
             const res = await api.post("/auth/login", { email, password });
             dispatch(loginSuccess(res.data));
             dispatch(stopChecking())
@@ -35,8 +37,13 @@ export const LoginPage = () => {
         } catch (error) {
             setError(error.response?.data?.message || error.message)
             dispatch(stopChecking())
+            setOpenSnack(false)
         }
 
+    }
+
+    const handleSnackClose= ()=>{
+        setOpenSnack(false)
     }
 
     return (
@@ -49,7 +56,7 @@ export const LoginPage = () => {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-            
+
 
             }}
         >
@@ -113,6 +120,15 @@ export const LoginPage = () => {
                     <Typography align="right"> ¿No tienes una cuenta? <Link to="/auth/register">Registrate</Link> </Typography>
                 </Box>
             </Container>
+
+            <Snackbar
+                open={openSnack}
+                autoHideDuration={1000}
+                onClose={handleSnackClose}
+                message="Cargando..."
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+
+            />
 
         </Box>
     )

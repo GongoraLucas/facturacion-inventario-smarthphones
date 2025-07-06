@@ -14,9 +14,9 @@ export const useForm = (initialForm={})=>{
     },[Object.keys(initialForm).join(",")])
 
     const onInputChange = ({target})=>{
-        const {name,value,type,checked}=target;
+        const {name,value}=target;
 
-        setFormData(current => ({... current,[name]:type === "checkbox" ? checked : value}))
+        setFormData(current => ({... current,[name]:value}))
     }
 
     const onResetForm = ()=>{

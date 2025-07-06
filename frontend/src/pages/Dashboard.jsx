@@ -18,11 +18,10 @@ export const Dashboard = () => {
 
         }
 
-    },[location.state])
+    },[])
 
     const handleCloseSnackbar = ()=>{
         setShowSnackbar(false)
-        location.state.loginSuccess = false
     }
     return (
         <>

@@ -10,6 +10,8 @@ const generateToken = (id,role)=>{
 
 const registerUser = async (req,res)=>{
     const {name,email,password,role} = req.body;
+
+    if (password.trim().length <= 6 ) return res.status(400).json({message:"Ingresa una contraseña de mas de 6 carácteres"})
     try{
         const existingUser = await User.findOne({email});
         if (existingUser) return res.status(400).json({message:`Ya existe un usuario con correo: ${email}`});
