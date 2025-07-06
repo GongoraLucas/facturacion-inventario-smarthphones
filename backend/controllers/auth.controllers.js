@@ -8,13 +8,21 @@ const generateToken = (id,role)=>{
     })
 }
 
-const registerUser = async (req,res)=>{
+const registerUser = async (req,res,next)=>{
     const {name,email,password,role} = req.body;
 
-    if (password.trim().length <= 6 ) return res.status(400).json({message:"Ingresa una contraseña de mas de 6 carácteres"})
+    if (password.trim().length <= 6 ) {
+        const error = new Error("Ingresa una constraseña de mas de 6 carácteres")
+        error.status = 400
+        return next(error)
+    }
     try{
         const existingUser = await User.findOne({email});
-        if (existingUser) return res.status(400).json({message:`Ya existe un usuario con correo: ${email}`});
+        if (existingUser) {
+            const error = new Error(`Ya existe un usuario con correo: ${email}`)
+            error.status = 400
+            return next(error)
+        }
 
         const passwordHashed = await bcrypt.hash(password,10);
 
@@ -37,21 +45,29 @@ const registerUser = async (req,res)=>{
         })
 
     }catch(error){
-        res.status(500).json({message:"Error al registrar usuario", error:error.message})
+        next(error)
 
     }
 
 }
 
-const loginUser = async (req,res)=>{
+const loginUser = async (req,res,next)=>{
     const {email,password}=req.body;
     try{
         const existingUser = await User.findOne({email});
-        if (!existingUser) return res.status(404).json({message:`No existe el  usuario con correo: ${email}`});
+        if (!existingUser) {
+            const error = new Error(`No existe el usuario con correo: ${email}`)
+            error.status = 404
+            return next(error)
+        }
 
         const match = await bcrypt.compare(password,existingUser.password);
 
-        if (!match) return res.status(401).json({message:"contraseña inválida"})
+        if (!match) {
+            const error = new Error("Contraseña inválida")
+            error.status = 401
+            return next(error)
+        }
 
         res.status(200).json({
             message:"Exito en el inicio de sesión",
@@ -64,7 +80,7 @@ const loginUser = async (req,res)=>{
             }
         })
     }catch(error){
-        res.status(500).json({message:"Error al iniciar sesión",error:error.message})
+        next(error)
     }
 }
 

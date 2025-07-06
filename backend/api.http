@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "name":"Lucas",
     "email":"lucas@gmail.com",
-    "password":"123456",
+    "password":"1234",
     "role":"vendedor"
 }
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "email":"lucas@gmail.com",
-    "password":"123456"
+    "password":"123456kbj"
 }
 
 ### Protección de rutas

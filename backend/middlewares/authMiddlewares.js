@@ -5,7 +5,9 @@ const protect = async (req,res,next) =>{
     const authHeader = req.headers.authorization;
 
     if (!authHeader || ! authHeader.startsWith("Bearer")){
-        return res.status(401).json({message:"Token no proporcionado"});
+        const error = new Error("Token no proporcionado")
+        error.status = 401
+        return next(error);
     }
 
     const token = authHeader.split(" ")[1];
@@ -17,7 +19,7 @@ const protect = async (req,res,next) =>{
         req.user = await User.findById(decoded.id).select("-password");
         next();
     }catch(error){
-        return res.status(401).json({message:"Token inválido", error:error.message});
+        return next(error)
     }
 }
 

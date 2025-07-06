@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const authRoutes = require("./routes/auth.routes")
+const authRoutes = require("./routes/auth.routes");
+const { errorHandler } = require("./middlewares/errorHandler");
 
 const app = express()
 
@@ -16,5 +17,8 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/auth",authRoutes)
+
+
+app.use(errorHandler)
 
 module.exports = app;
