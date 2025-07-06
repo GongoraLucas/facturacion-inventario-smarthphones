@@ -5,6 +5,7 @@ import api from "../services/api"
 import { loginSuccess, startChecking, stopChecking } from "../redux/slices/authSlice"
 import { Alert, Box, Button, Checkbox, Container, FormControlLabel, FormGroup, Radio, RadioGroup, Snackbar, TextField, Typography, useTheme } from "@mui/material"
 import { Link } from "react-router-dom"
+import { register } from "../redux/thunks/authThunks"
 
 const initialForm = {
     name: "",
@@ -27,20 +28,7 @@ export const RegisterPage = () => {
         if (!name || !email || !password || role === "") {
             return setError("Llene todos los campos");
         }
-
-        try {
-            dispatch(startChecking())
-            setOpenSnack(true)
-            const res = await api.post("/auth/register", { email, password, name, role});
-            dispatch(loginSuccess(res.data));
-            dispatch(stopChecking())
-
-
-        } catch (error) {
-            setError(error.response?.data?.message || error.message)
-            dispatch(stopChecking())
-            setOpenSnack(false)
-        }
+        dispatch(register(name,email,password,role,setError,setOpenSnack))
 
     }
 

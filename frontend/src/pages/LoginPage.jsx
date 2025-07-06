@@ -5,6 +5,7 @@ import api from "../services/api"
 import { loginSuccess, startChecking, stopChecking } from "../redux/slices/authSlice"
 import { Alert, Box, Button, Container, Snackbar, TextField, Typography, useTheme } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
+import { SignIn } from "../redux/thunks/authThunks"
 
 const initialForm = {
     email: "",
@@ -26,19 +27,9 @@ export const LoginPage = () => {
         if (!email || !password) {
             return setError("Llene todos los campos");
         }
+        
+        dispatch(SignIn(email,password,setError,setOpenSnack))
 
-        try {
-            dispatch(startChecking())
-            setOpenSnack(true)
-            const res = await api.post("/auth/login", { email, password });
-            dispatch(loginSuccess(res.data));
-            dispatch(stopChecking())
-
-        } catch (error) {
-            setError(error.response?.data?.message || error.message)
-            dispatch(stopChecking())
-            setOpenSnack(false)
-        }
 
     }
 
