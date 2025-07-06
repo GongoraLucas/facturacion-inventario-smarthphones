@@ -1,32 +1,30 @@
-import { useEffect, useState } from "react"
-
+import { useEffect, useState } from 'react';
 
 /**
  * Custom hook para el manejo de formularios
  * @param {Object} initialForm - Valores iniciales del formulario
  * @returns {Object} formData, onInputChange, onResetForm
  */
-export const useForm = (initialForm={})=>{
-    const [formData,setFormData] =useState(initialForm);
+export const useForm = (initialForm = {}) => {
+  const [formData, setFormData] = useState(initialForm);
 
-    useEffect(()=>{
-        setFormData(initialForm)
-    },[Object.keys(initialForm).join(",")])
+  useEffect(() => {
+    setFormData(initialForm);
+  }, [Object.keys(initialForm).join(',')]);
 
-    const onInputChange = ({target})=>{
-        const {name,value}=target;
+  const onInputChange = ({ target }) => {
+    const { name, value } = target;
 
-        setFormData(current => ({... current,[name]:value}))
-    }
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
 
-    const onResetForm = ()=>{
-        setFormData(initialForm);
-    }
+  const onResetForm = () => {
+    setFormData(initialForm);
+  };
 
-    return {
-        ...formData,
-        onInputChange,
-        onResetForm
-    }
-
-}
+  return {
+    ...formData,
+    onInputChange,
+    onResetForm,
+  };
+};
