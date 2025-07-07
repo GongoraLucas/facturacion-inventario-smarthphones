@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { register } from '../redux/thunks/authThunks';
-import { AnimationTitle } from '../components/AnimationTitle';
+import { Title } from '../components/AuthTitle';
 
 const initialForm = {
   name: '',
@@ -48,112 +48,117 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: theme.palette.primary.main,
-        minHeight: '100vh',
-        width: '100vw',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        p: 2,
-      }}
-    >
-      <AnimationTitle
-        staticText="Smartphones"
-        animatedWords={['Facturación', 'Inventario']}
-        duration={2500}
-      />
-
-      <Container maxWidth="sm" sx={{ mt: 8 }}>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
+    <>
+      <Box
+        sx={{
+          backgroundColor: theme.palette.primary.main,
+          minHeight: '100vh',
+          width: '100vw',
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          gap: 1,
+        }}
+      >
+        <Title />
+        <Container
+          maxWidth="sm"
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: 3,
-            p: 4,
-            border: '1px solid #ccc',
-            borderRadius: 2,
-            boxShadow: 3,
-            backgroundColor: '#fff',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
           }}
         >
-          <Typography variant="h4" component="h2" align="center">
-            Registrate
-          </Typography>
-
-          <TextField
-            label="Nombre"
-            type="text"
-            name="name"
-            value={name}
-            onChange={onInputChange}
-            disabled={isChecking}
-            fullWidth
-          />
-
-          <TextField
-            label="Correo electrónico"
-            type="email"
-            name="email"
-            value={email}
-            onChange={onInputChange}
-            disabled={isChecking}
-            fullWidth
-          />
-
-          <TextField
-            label="Contraseña"
-            type="password"
-            name="password"
-            value={password}
-            onChange={onInputChange}
-            disabled={isChecking}
-            fullWidth
-          />
-
-          <RadioGroup
-            name="role"
-            value={role}
-            onChange={onInputChange}
-            disabled={isChecking}
-            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              p: 4,
+              border: '1px solid #ccc',
+              borderRadius: 2,
+              boxShadow: 3,
+              backgroundColor: '#fff',
+              margin: 1,
+            }}
           >
-            <Typography sx={{ marginRight: '20px' }}>Rol:</Typography>
-            <Box>
-              <FormControlLabel control={<Radio />} label="administrador" value="admin" />
-              <FormControlLabel control={<Radio />} label="vendedor" value="vendedor" />
-            </Box>
-          </RadioGroup>
+            <Typography variant="h4" component="h2" align="center">
+              Registrate
+            </Typography>
 
-          {error && <Alert severity="error">{error}</Alert>}
+            <TextField
+              label="Nombre"
+              type="text"
+              name="name"
+              value={name}
+              onChange={onInputChange}
+              disabled={isChecking}
+              fullWidth
+            />
 
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={isChecking}
-            sx={{ mt: 1, height: '45px' }}
-            fullWidth
-          >
-            Registrar
-          </Button>
-          <Typography align="right">
-            {' '}
-            ¿Ya tienes una cuenta? <Link to="/auth/login">Inicia sesión</Link>{' '}
-          </Typography>
-        </Box>
-      </Container>
+            <TextField
+              label="Correo electrónico"
+              type="email"
+              name="email"
+              value={email}
+              onChange={onInputChange}
+              disabled={isChecking}
+              fullWidth
+            />
 
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={1000}
-        onClose={handleSnackClose}
-        message="Cargando..."
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
-    </Box>
+            <TextField
+              label="Contraseña"
+              type="password"
+              name="password"
+              value={password}
+              onChange={onInputChange}
+              disabled={isChecking}
+              fullWidth
+            />
+
+            <RadioGroup
+              name="role"
+              value={role}
+              onChange={onInputChange}
+              disabled={isChecking}
+              sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+            >
+              <Typography sx={{ marginRight: '20px' }}>Rol:</Typography>
+              <Box>
+                <FormControlLabel control={<Radio />} label="administrador" value="admin" />
+                <FormControlLabel control={<Radio />} label="vendedor" value="vendedor" />
+              </Box>
+            </RadioGroup>
+
+            {error && <Alert severity="error">{error}</Alert>}
+
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={isChecking}
+              sx={{ mt: 1, height: '45px' }}
+              fullWidth
+            >
+              Registrar
+            </Button>
+            <Typography align="right">
+              {' '}
+              ¿Ya tienes una cuenta? <Link to="/auth/login">Inicia sesión</Link>{' '}
+            </Typography>
+          </Box>
+        </Container>
+
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={1000}
+          onClose={handleSnackClose}
+          message="Cargando..."
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        />
+      </Box>
+    </>
   );
 };
