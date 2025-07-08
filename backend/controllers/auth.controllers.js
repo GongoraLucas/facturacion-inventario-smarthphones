@@ -80,7 +80,7 @@ const loginUser = async (req,res,next)=>{
 }
 
 const getProfile = (req,res)=>{
-    res.status(200).json({user:req.user})
+    res.status(200).json(req.user)
 
 }
 module.exports = {

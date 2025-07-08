@@ -6,6 +6,7 @@ import { loadUser } from './redux/thunks/authThunks';
 export const App = () => {
   const dispatch = useDispatch()
   useEffect(()=>{
+    
     const token=localStorage.getItem("token")
     if (token){
       dispatch(loadUser())

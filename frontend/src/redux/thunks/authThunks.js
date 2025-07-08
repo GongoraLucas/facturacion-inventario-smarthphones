@@ -4,9 +4,9 @@ import { showSnackbar } from '../slices/uiSlice';
 
 export const SignIn = (email = '', password = '') => {
   return async (dispatch) => {
+    dispatch(startChecking());
+    dispatch(showSnackbar({ msg: 'Cargando...', severity: 'info' }));
     try {
-      dispatch(startChecking());
-      dispatch(showSnackbar({msg:"Cargando...", severity:"info"}))
       const res = await api.post('/auth/login', { email, password });
       dispatch(loginSuccess(res.data));
       dispatch(showSnackbar({ msg: 'Inicio de sesión exitoso', severity: 'success' }));
@@ -25,17 +25,19 @@ export const SignIn = (email = '', password = '') => {
 
 export const register = (name = '', email = '', password = '', role = '') => {
   return async (dispatch) => {
+    dispatch(startChecking());
+    dispatch(showSnackbar({ msg: 'Cargando...', severity: 'info' }));
     try {
-      dispatch(startChecking());
-      dispatch(showSnackbar({msg:"Cargando...", severity:"info"}))
       const res = await api.post('/auth/register', { name, email, password, role });
       dispatch(loginSuccess(res.data));
-      dispatch(showSnackbar({msg:"Registro exitoso",severity:"success"}))
+      dispatch(showSnackbar({ msg: 'Registro exitoso', severity: 'success' }));
     } catch (error) {
-      dispatch(showSnackbar({
-        msg:error.response?.data?.message || error.message,
-        severity: "error"
-      }))
+      dispatch(
+        showSnackbar({
+          msg: error.response?.data?.message || error.message,
+          severity: 'error',
+        })
+      );
 
       showSnackbar(false);
     } finally {
@@ -46,8 +48,8 @@ export const register = (name = '', email = '', password = '', role = '') => {
 
 export const loadUser = () => {
   return async (dispatch) => {
+    dispatch(startChecking());
     try {
-      dispatch(startChecking());
       const res = await api.get('/auth/profile');
       dispatch(setUser(res.data));
     } catch (error) {
