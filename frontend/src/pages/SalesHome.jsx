@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const SalesHome = () => {
-  return (
-    <div>SalePage</div>
-  )
-}
+  return <div>SalePage</div>;
+};

@@ -6,14 +6,17 @@ import store from './redux/store.js';
 import { AppTheme } from './theme/AppTheme.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalSnackbar from './components/GlobalSnackbar.jsx';
+import { AuthInit } from './components/AuthInit.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <AppTheme>
         <BrowserRouter>
-          <App />
-          <GlobalSnackbar/>
+          <AuthInit>
+            <App />
+            <GlobalSnackbar />
+          </AuthInit>
         </BrowserRouter>
       </AppTheme>
     </Provider>

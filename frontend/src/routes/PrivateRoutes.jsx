@@ -11,7 +11,7 @@ export const PrivateRoutes = () => {
     <Routes>
       <Route path="dashboard" element={<DashboardLayout />}>
         <Route element={<RoleRoute roles={['vendedor']} />}>
-          <Route index element={<SalesHome/>}/>
+          <Route index element={<SalesHome />} />
           <Route path="ventas" element={<SalesHome />} />
         </Route>
 

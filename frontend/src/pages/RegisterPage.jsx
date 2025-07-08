@@ -33,16 +33,14 @@ export const RegisterPage = () => {
     evt.preventDefault();
 
     if (!name || !email || !password || role === '') {
-      return dispatch(showSnackbar({msg:"Llene todos los campos", severity:"error"}));
+      return dispatch(showSnackbar({ msg: 'Llene todos los campos', severity: 'error' }));
     }
     dispatch(register(name, email, password, role));
   };
 
-
   return (
     <>
       <AuthLayout title="Registrate" handleSubmit={handleSubmit}>
-
         <TextField
           label="Nombre"
           type="text"
@@ -87,7 +85,6 @@ export const RegisterPage = () => {
           </Box>
         </RadioGroup>
 
-
         <Button
           type="submit"
           variant="contained"
@@ -102,7 +99,6 @@ export const RegisterPage = () => {
           ¿Ya tienes una cuenta? <Link to="/auth/login">Inicia sesión</Link>{' '}
         </Typography>
       </AuthLayout>
-
     </>
   );
 };

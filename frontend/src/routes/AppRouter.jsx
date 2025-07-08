@@ -3,6 +3,9 @@ import { PublicRoutes } from './PublicRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
 import { ProtectedPrivateRoutes } from './ProtectedPrivateRoutes';
 import { ProtectedPublicRoutes } from './ProtectedPublicRoutes';
+import { useDispatch } from 'react-redux';
+import { loadUser } from '../redux/thunks/authThunks';
+import { useEffect } from 'react';
 
 export const AppRouter = () => {
   return (

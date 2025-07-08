@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import { Box, Container, Typography } from '@mui/material';
 import { AuthTitle } from '../components/AuthTitle';
 
-export const AuthLayout = ({ children, title = '', handleSubmit=()=>{} }) => {
+export const AuthLayout = ({ children, title = '', handleSubmit = () => {} }) => {
   const theme = useTheme();
   return (
     <>
