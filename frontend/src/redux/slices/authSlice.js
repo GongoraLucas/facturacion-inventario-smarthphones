@@ -20,6 +20,10 @@ const authSlice = createSlice({
       state.justLoggedIn = true;
     },
 
+    setUser: (state,action)=>{
+      state.user = action.payload.user;
+    },
+
     startChecking: (state) => {
       state.isChecking = true;
     },
@@ -40,7 +44,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginSuccess, logout, startChecking, stopChecking, clearJustLoggedIn } =
+export const { loginSuccess, logout, startChecking, stopChecking, clearJustLoggedIn,setUser } =
   authSlice.actions;
 
 export default authSlice.reducer;
