@@ -16,6 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import { register } from '../redux/thunks/authThunks';
 import { AuthLayout } from '../layouts/AuthLayout';
+import { showSnackbar } from '../redux/slices/uiSlice';
 
 const initialForm = {
   name: '',
@@ -27,22 +28,16 @@ export const RegisterPage = () => {
   const { isChecking } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { name, email, password, role, onInputChange } = useForm(initialForm);
-  const [error, setError] = useState('');
-  const [openSnack, setOpenSnack] = useState(false);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    setError('');
 
     if (!name || !email || !password || role === '') {
-      return setError('Llene todos los campos');
+      return dispatch(showSnackbar({msg:"Llene todos los campos", severity:"error"}));
     }
-    dispatch(register(name, email, password, role, setError, setOpenSnack));
+    dispatch(register(name, email, password, role));
   };
 
-  const handleSnackClose = () => {
-    setOpenSnack(false);
-  };
 
   return (
     <>
@@ -92,7 +87,6 @@ export const RegisterPage = () => {
           </Box>
         </RadioGroup>
 
-        {error && <Alert severity="error">{error}</Alert>}
 
         <Button
           type="submit"
@@ -109,13 +103,6 @@ export const RegisterPage = () => {
         </Typography>
       </AuthLayout>
 
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={1000}
-        onClose={handleSnackClose}
-        message="Cargando..."
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </>
   );
 };

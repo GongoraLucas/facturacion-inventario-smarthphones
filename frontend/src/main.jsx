@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import { AppTheme } from './theme/AppTheme.jsx';
 import { BrowserRouter } from 'react-router-dom';
+import GlobalSnackbar from './components/GlobalSnackbar.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')).render(
       <AppTheme>
         <BrowserRouter>
           <App />
+          <GlobalSnackbar/>
         </BrowserRouter>
       </AppTheme>
     </Provider>

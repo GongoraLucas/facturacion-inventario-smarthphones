@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import { SignIn } from '../redux/thunks/authThunks';
 import { AuthLayout } from '../layouts/AuthLayout';
+import { showSnackbar } from '../redux/slices/uiSlice';
 
 const initialForm = {
   email: '',
@@ -20,22 +21,15 @@ export const LoginPage = () => {
   const { isChecking } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { email, password, onInputChange } = useForm(initialForm);
-  const [error, setError] = useState('');
-  const [openSnack, setOpenSnack] = useState(false);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    setError('');
 
     if (!email || !password) {
-      return setError('Llene todos los campos');
+      return dispatch(showSnackbar({msg:"Llene todos los campos", severity:"error"}));
     }
 
-    dispatch(SignIn(email, password, setError, setOpenSnack));
-  };
-
-  const handleSnackClose = () => {
-    setOpenSnack(false);
+    dispatch(SignIn(email, password));
   };
 
   return (
@@ -61,7 +55,6 @@ export const LoginPage = () => {
             fullWidth
           />
 
-          {error && <Alert severity="error">{error}</Alert>}
 
           <Button
             type="submit"
@@ -78,13 +71,6 @@ export const LoginPage = () => {
           </Typography>
       </AuthLayout>
 
-      <Snackbar
-        open={openSnack}
-        autoHideDuration={1000}
-        onClose={handleSnackClose}
-        message="Cargando..."
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </>
   );
 };

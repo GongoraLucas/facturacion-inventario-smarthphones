@@ -1,41 +1,45 @@
 import api from '../../services/api';
 import { loginSuccess, logout, setUser, startChecking, stopChecking } from '../slices/authSlice';
+import { showSnackbar } from '../slices/uiSlice';
 
-export const SignIn = (email = '', password = '', setError = () => {}, showSnackbar = () => {}) => {
+export const SignIn = (email = '', password = '') => {
   return async (dispatch) => {
     try {
       dispatch(startChecking());
-      showSnackbar(true);
+      dispatch(showSnackbar({msg:"Cargando...", severity:"info"}))
       const res = await api.post('/auth/login', { email, password });
       dispatch(loginSuccess(res.data));
-      dispatch(stopChecking());
+      dispatch(showSnackbar({ msg: 'Inicio de sesión exitoso', severity: 'success' }));
     } catch (error) {
-      setError(error.response?.data?.message || error.message);
+      dispatch(
+        showSnackbar({
+          msg: error.response?.data?.message || error.message,
+          severity: 'error',
+        })
+      );
+    } finally {
       dispatch(stopChecking());
-      showSnackbar(false);
     }
   };
 };
 
-export const register = (
-  name = '',
-  email = '',
-  password = '',
-  role = '',
-  setError = () => {},
-  showSnackbar = () => {}
-) => {
+export const register = (name = '', email = '', password = '', role = '') => {
   return async (dispatch) => {
     try {
       dispatch(startChecking());
-      showSnackbar(true);
+      dispatch(showSnackbar({msg:"Cargando...", severity:"info"}))
       const res = await api.post('/auth/register', { name, email, password, role });
       dispatch(loginSuccess(res.data));
-      dispatch(stopChecking());
+      dispatch(showSnackbar({msg:"Registro exitoso",severity:"success"}))
     } catch (error) {
-      setError(error.response?.data?.message || error.message);
-      dispatch(stopChecking());
+      dispatch(showSnackbar({
+        msg:error.response?.data?.message || error.message,
+        severity: "error"
+      }))
+
       showSnackbar(false);
+    } finally {
+      dispatch(stopChecking());
     }
   };
 };
