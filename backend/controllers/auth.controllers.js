@@ -79,12 +79,12 @@ const loginUser = async (req,res,next)=>{
     }
 }
 
-const getPerfil = (req,res)=>{
+const getProfile = (req,res)=>{
     res.status(200).json({user:req.user})
 
 }
 module.exports = {
     registerUser,
     loginUser,
-    getPerfil
+    getProfile
 }
