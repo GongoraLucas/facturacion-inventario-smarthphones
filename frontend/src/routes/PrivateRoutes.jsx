@@ -5,11 +5,13 @@ import { RoleRoute } from './RoleRoute';
 import { SalesHome } from '../pages/SalesHome';
 import { ProductPage } from '../pages/ProductPage';
 import { UserPage } from '../pages/UserPage';
+import { DashboardHome } from '../pages/DashboardHome';
 
 export const PrivateRoutes = () => {
   return (
     <Routes>
       <Route path="dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardHome />} />
         <Route element={<RoleRoute roles={['vendedor']} />}>
           <Route index element={<SalesHome />} />
           <Route path="ventas" element={<SalesHome />} />
