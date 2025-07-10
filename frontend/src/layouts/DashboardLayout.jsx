@@ -25,19 +25,18 @@ export const DashboardLayout = () => {
           <ResponsiveDrawer isMobile={isMobile} open={openMobile} onClose={handleDrawerToggle}>
             <Sidebar handleDrawerToggle={handleDrawerToggle} isMobile={isMobile} />
           </ResponsiveDrawer>
-
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              p: 3,
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              ml: { sm: `${drawerWidth}px` },
-            }}
-          >
-            <Toolbar />
-            <Outlet />
-          </Box>
+        </Box>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            ml: { sm: `${drawerWidth}px` },
+          }}
+        >
+          <Toolbar />
+          <Outlet />
         </Box>
       </Box>
     </>
