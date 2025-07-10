@@ -1,4 +1,4 @@
-const {registerUser,loginUser,getProfile} = require("../controllers/auth.controllers")
+const {registerUser,loginUser,getProfile} = require("../controllers/auth.controller")
 const {protect} =require("../middlewares/authMiddlewares")
 const express = require("express");
 const { registerValidations, loginValidations } = require("../validations/authValidation");

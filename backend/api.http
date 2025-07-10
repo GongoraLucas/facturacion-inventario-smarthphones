@@ -14,10 +14,82 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "email":"lucas@gmail.c",
-    "password":"12345"
+    "email":"pepe@gmail.com",
+    "password":"123456"
 }
 
 ### Protección de rutas
 GET http://localhost:5000/api/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MTQyOTA2OSwiZXhwIjoxNzUyMDMzODY5fQ.zMnXpiFwmcP_S64qNu5eMdxV4dHdrcbTxyW7WgeRsd8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODg4NiwiZXhwIjoxNzUyNzIzNjg2fQ.ZhzcQBFSChtIGRtfaIRklaclWJfz8IvWeCH5p_VL61U
+### Create Product
+POST http://localhost:5000/api/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NmNiYzcyOTdkMjZkNzNiNmMyZWRiNyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjExODkyNywiZXhwIjoxNzUyNzIzNzI3fQ.bnqPU1v4wXpnq3k3lk37hWCcYO8PTCQB7o0u4gKDWQM
+
+{
+  "name": "iPhone 13",
+  "description": "Smartphone Apple",
+  "price": 899.99,
+  "stock": 10
+}
+### Get Products
+GET http://localhost:5000/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+### Eliminar producto por ID
+DELETE http://localhost:5000/api/products/686f38ef4203926a6adefe55
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+### Crear cliente
+POST http://localhost:5000/api/clients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+
+{
+  "name": "Lucas Góngora",
+  "email": "lucas@example.com",
+  "cedula": "0102030405"
+}
+
+### Obtener clientes
+GET http://localhost:5000/api/clients
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+
+### Eliminar cliente por ID
+DELETE http://localhost:5000/api/clients/686f3c19ec692eccd2818d42
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+### Crear factura
+POST http://localhost:5000/api/invoices
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+
+{
+  "client": "64fabc1234567890abcdef01",
+  "items": [
+    {
+      "product": "64facd1234567890abcdef02",
+      "quantity": 2,
+      "price": 599.99
+    },
+    {
+      "product": "64facd1234567890abcdef03",
+      "quantity": 1,
+      "price": 399.50
+    }
+  ],
+  "total": 1599.48
+}
+
+### Obtener facturas
+GET http://localhost:5000/api/invoices
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
+
+### Eliminar factura
+DELETE http://localhost:5000/api/invoices/64facd9876543210abcdef05
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
+
