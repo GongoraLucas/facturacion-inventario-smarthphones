@@ -23,26 +23,40 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { useEffect, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchInvoices } from '../redux/thunks/invoiceThunks';
+import { fetchClients } from '../redux/thunks/clientThunks';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
 export const DashboardSeller = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { data: invoices } = useSelector((state) => state.invoice);
+  const { data:  clients } = useSelector((state) => state.client);
+
+  useEffect(() => {
+    dispatch(fetchInvoices());
+    dispatch(fetchClients());
+  }, [dispatch]);
+
+  const ingresos = useMemo(() => {
+    return invoices.reduce((acc, invoice) => acc + (invoice.total || 0), 0);
+  }, [invoices]);
+
+  const clientesAtendidos = useMemo(() => {
+    if (!invoices || invoices.length === 0) return 0;
+    const clientesSet = new Set(invoices.map((inv) => inv.cliente));
+    return clientesSet.size;
+  }, [invoices]);
 
   // KPIs simulados
   const kpis = [
-    { label: 'Ventas realizadas', value: 27, color: 'primary' },
-    { label: 'Ingresos generados', value: 3470.50, color: 'secondary' },
-    { label: 'Clientes atendidos', value: 22, color: 'success' },
+    { label: 'Ventas realizadas', value: invoices.length, color: 'primary' },
+    { label: 'Ingresos generados', value: ingresos, color: 'secondary' },
+    { label: 'Clientes atendidos', value: clientesAtendidos, color: 'success' },
   ];
 
   const chartData = {
@@ -71,11 +85,16 @@ export const DashboardSeller = () => {
     },
   };
 
-  const clientesRecientes = [
-    { nombre: 'Carlos Ruiz', fecha: '2024-07-06' },
-    { nombre: 'María López', fecha: '2024-07-05' },
-    { nombre: 'Juan Pérez', fecha: '2024-07-03' },
-  ];
+  const clientesRecientes = useMemo(() => {
+    if (!invoices || !clients) return [];
+    return invoices.map((invoice) => {
+      const cliente = clients.find((c) => c._id === invoice.client);
+      return {
+        name: cliente ? cliente.name : invoice.client.name,
+        date: invoice.createdAt || 'N/A',
+      };
+    });
+  }, [invoices, clients]);
 
   return (
     <Box sx={{ width: '100%', overflowX: 'hidden' }}>
@@ -128,9 +147,9 @@ export const DashboardSeller = () => {
             </TableHead>
             <TableBody>
               {clientesRecientes.map((cli) => (
-                <TableRow key={cli.nombre}>
-                  <TableCell>{cli.nombre}</TableCell>
-                  <TableCell>{cli.fecha}</TableCell>
+                <TableRow key={cli.date}>
+                  <TableCell>{cli.name}</TableCell>
+                  <TableCell>{cli.date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

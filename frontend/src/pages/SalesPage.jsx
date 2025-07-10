@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { InvoiceForm } from '../components/invoice/InvoiceForm';
 import { fetchInvoices } from '../redux/thunks/invoiceThunks';
+import { fetchProducts } from '../redux/thunks/productThunks';
 
 export const SalesPage = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ export const SalesPage = () => {
 
   useEffect(() => {
     dispatch(fetchInvoices());
+    dispatch(fetchProducts());
   }, [dispatch]);
 
   return (
@@ -35,7 +37,7 @@ export const SalesPage = () => {
             <Typography>Fecha: {new Date(inv.createdAt).toLocaleDateString()}</Typography>
             <Typography>Productos:</Typography>
             <ul>
-              {inv.products.map((p, i) => (
+              {inv.items.map((p, i) => (
                 <li key={i}>
                   {p.product?.name || 'Desconocido'} x {p.quantity}
                 </li>

@@ -49,17 +49,28 @@ export const InvoiceForm = () => {
       return;
     }
 
+    const outOfStock = items.find((item) => {
+      const product = products.find((p) => p._id === item.product);
+      return !product || item.quantity > product.stock;
+    });
+
+    if (outOfStock) {
+      dispatch(
+        showSnackbar({
+          msg: 'Cantidad supera el stock disponible de uno o más productos',
+          severity: 'error',
+        })
+      );
+      return;
+    }
+
     const invoiceData = {
       client,
       date,
-      items: items.map((item) => {
-        const selectedProduct = products.find((p) => p._id === item.product);
-        return {
-          product: item.product,
-          quantity: item.quantity,
-          price: selectedProduct?.price || 0,
-        };
-      }),
+      items: items.map((item) => ({
+        product: item.product,
+        quantity: item.quantity,
+      })),
     };
 
     dispatch(createNewInvoice(invoiceData));

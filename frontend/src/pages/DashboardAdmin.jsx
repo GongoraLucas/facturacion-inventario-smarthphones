@@ -15,16 +15,28 @@ import {
   Typography,
 } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { fetchProducts } from '../redux/thunks/productThunks';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 export const DashboardAdmin = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const {data:products} = useSelector(state=>state.product)
+  useEffect(()=>{
+    dispatch(fetchProducts())
+
+  },[dispatch])
+  const productosBajoStock = useMemo(()=>{
+    return products.filter(product => product.stock <= 5 )
+  },[products])
 
   const kpis = [
-    { label: 'Ventas Totales', value: 345, color: 'primary' },
-    { label: 'Ingresos Totales (USD)', value: 14832.75, color: 'secondary' },
-    { label: 'Usuarios registrados', value: 14832.75, color: 'success' },
-    { label: 'Productos con bajo stock', value: 5, color: 'error' },
+    // { label: 'Ventas Totales', value: 345, color: 'primary' },
+    // { label: 'Ingresos Totales (USD)', value: 14832.75, color: 'secondary' },
+    // { label: 'Usuarios registrados', value: 14832.75, color: 'success' },
+    { label: 'Productos con bajo stock', value: productosBajoStock.length, color: 'error' },
   ];
 
   const chartData = {
@@ -56,11 +68,15 @@ export const DashboardAdmin = () => {
     { nombre: 'Redmi Note 12', vendidos: 65 },
   ];
 
-  const productosRecientes = [
-    { nombre: 'Motorola G84', fecha: '2024-06-29' },
-    { nombre: 'Nokia X20', fecha: '2024-06-27' },
-    { nombre: 'Samsung M14', fecha: '2024-06-25' },
-  ];
+  const productosRecientes = useMemo(() => {
+    if (!products) return [];
+    return products.map((product) => {
+      return {
+        name: product.name,
+        date: product.createdAt || 'N/A',
+      };
+    });
+  }, [products]);
 
   return (
     <Box>
@@ -95,7 +111,7 @@ export const DashboardAdmin = () => {
         <Bar data={chartData} options={chartOptions}  />
       </Box>
       <Grid container spacing={3} mt={3}>
-        <Grid size={{ xs: 12, md: 6 }}>
+        {/* <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h6" gutterBottom>
             Productos más vendidos
           </Typography>
@@ -117,7 +133,7 @@ export const DashboardAdmin = () => {
               </TableBody>
             </Table>
           </TableContainer>
-        </Grid>
+        </Grid> */}
 
         <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h6" gutterBottom>
@@ -133,9 +149,9 @@ export const DashboardAdmin = () => {
               </TableHead>
               <TableBody>
                 {productosRecientes.map((prod) => (
-                  <TableRow key={prod.nombre}>
-                    <TableCell>{prod.nombre}</TableCell>
-                    <TableCell>{prod.fecha}</TableCell>
+                  <TableRow key={prod.date}>
+                    <TableCell>{prod.name}</TableCell>
+                    <TableCell>{prod.date}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

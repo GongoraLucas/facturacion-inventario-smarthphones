@@ -61,7 +61,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN
 DELETE http://localhost:5000/api/clients/686f3c19ec692eccd2818d42
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
 
-### Crear factura
+### Crear una nueva factura
 POST http://localhost:5000/api/invoices
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
@@ -69,19 +69,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN
 
 {
   "client": "64fabc1234567890abcdef01",
+  "date": "2025-07-10",
   "items": [
     {
       "product": "64facd1234567890abcdef02",
-      "quantity": 2,
-      "price": 599.99
+      "quantity": 2
     },
     {
       "product": "64facd1234567890abcdef03",
-      "quantity": 1,
-      "price": 399.50
+      "quantity": 1
     }
-  ],
-  "total": 1599.48
+  ]
 }
 
 ### Obtener facturas

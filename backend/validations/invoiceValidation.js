@@ -11,17 +11,16 @@ const objectId = () =>
 
 const invoiceSchema = Joi.object({
   client: objectId().required(),
+   date: Joi.date().iso().optional(),
   items: Joi.array()
     .items(
       Joi.object({
         product: objectId().required(),
         quantity: Joi.number().integer().min(1).required(),
-        price: Joi.number().min(0).required(),
       })
     )
     .min(1)
     .required(),
-  total: Joi.number().min(0).required(),
 });
 
 module.exports = { invoiceSchema };

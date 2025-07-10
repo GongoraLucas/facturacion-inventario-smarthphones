@@ -70,14 +70,14 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
           <ListItemText primary="Productos" />
         </ListItemButton>
       </ListItem>
-      <ListItem disablePadding>
+      {/* <ListItem disablePadding>
         <ListItemButton
           selected={isSelected('/dashboard/usuarios')}
           onClick={() => navigate('/dashboard/usuarios')}
         >
           <ListItemText primary="Usuarios" />
         </ListItemButton>
-      </ListItem>
+      </ListItem> */}
     </>
   );
   return (
