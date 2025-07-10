@@ -7,6 +7,7 @@ import { ProductPage } from '../pages/ProductPage';
 import { UserPage } from '../pages/UserPage';
 import { DashboardHome } from '../pages/DashboardHome';
 import { DashboardSeller } from '../pages/DashboardSeller';
+import { ClientPage } from '../pages/ClientPage';
 
 export const PrivateRoutes = () => {
   return (
@@ -16,6 +17,7 @@ export const PrivateRoutes = () => {
         <Route element={<RoleRoute roles={['vendedor']} />}>
           <Route index element={<DashboardSeller />} />
           <Route path="ventas" element={<SalesPage />} />
+          <Route path="clientes" element={<ClientPage />} />
         </Route>
 
         <Route element={<RoleRoute roles={['admin']} />}>

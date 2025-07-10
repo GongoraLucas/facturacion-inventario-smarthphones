@@ -90,6 +90,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN
 
 
 ### Eliminar factura
-DELETE http://localhost:5000/api/invoices/64facd9876543210abcdef05
+DELETE http://localhost:5000/api/invoices/686f43451cc2b32e706a13b6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjM4OTkyN2ZlNDdiYTg3N2FhNTIwMiIsInJvbGUiOiJ2ZW5kZWRvciIsImlhdCI6MTc1MjExODgzMywiZXhwIjoxNzUyNzIzNjMzfQ.WxSWVC7ByAnQM_PfY9d3B7yKNn1xdm8YF_3nUtRnFnk
 

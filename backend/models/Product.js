@@ -26,8 +26,8 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["Electrónica", "Ropa", "Alimentos", "Otros"],
-      default: "Otros",
+      enum: ["Xiaomi", "Samsung", "IPhone", "Otro"],
+      default: "Otro",
     },
   },
   {

@@ -10,7 +10,7 @@ export const useForm = (initialForm = {}) => {
 
   useEffect(() => {
     setFormData(initialForm);
-  }, [Object.keys(initialForm).join(',')]);
+  }, [initialForm]);
 
   const onInputChange = ({ target }) => {
     const { name, value } = target;

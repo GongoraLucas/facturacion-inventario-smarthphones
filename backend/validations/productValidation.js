@@ -5,6 +5,7 @@ const productSchema = Joi.object({
   description: Joi.string().allow("", null),
   price: Joi.number().positive().required(),
   stock: Joi.number().integer().min(0).required(),
+  category: Joi.string().valid("Xiaomi","Samsung","IPhone","Otro").required()
 });
 
 module.exports = {
