@@ -5,6 +5,7 @@ import {
   addProduct,
   removeProduct,
   setProductError,
+  updateProduct,
 } from '../slices/productSlice';
 import { showSnackbar } from '../slices/uiSlice';
 
@@ -58,7 +59,7 @@ export const deleteProductById = (productId) => {
       dispatch(
         showSnackbar({
           msg: 'Producto eliminado correctamente',
-          severity: 'info',
+          severity: 'success',
         })
       );
     } catch (error) {
@@ -69,6 +70,35 @@ export const deleteProductById = (productId) => {
           severity: 'error',
         })
       );
+    }
+  };
+};
+
+
+export const confirmDeleteProduct= (invoiceId) => {
+  return async (dispatch) => {
+    dispatch(
+      showSnackbar({
+        msg: '¿Estás seguro de eliminar este producto?',
+        severity: 'warning',
+        confirmation: true,
+        onAccept: () => dispatch(deleteProductById(invoiceId)),
+        onCancel: () => dispatch(showSnackbar({msg:"Se cancelo la eliminacion del producto",severity:"info"})),
+      })
+    );
+  };
+};
+
+
+export const updateProductById = (productId, updatedData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await api.put(`/products/${productId}`, updatedData);
+      dispatch(updateProduct(data));
+      dispatch(showSnackbar({ msg: 'Producto actualizado correctamente', severity: 'success' }));
+    } catch (error) {
+      dispatch(setClientError(error.message));
+      dispatch(showSnackbar({ msg: 'Error al actualizar producto', severity: 'error' }));
     }
   };
 };

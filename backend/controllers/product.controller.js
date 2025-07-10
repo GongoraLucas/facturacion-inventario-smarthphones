@@ -28,6 +28,24 @@ const getProducts = async (req, res, next) => {
   }
 };
 
+const updateProduct = async (req, res, next) => {
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true } // new: true devuelve el documento actualizado; runValidators para validar los datos
+    );
+    if (!updatedProduct) {
+      const error = new Error("Producto no encontrado");
+      error.status = 404;
+      return next(error);
+    }
+    res.json(updatedProduct);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteProduct = async (req, res, next) => {
   try {
     const eliminated = await Product.findByIdAndDelete(req.params.id);
@@ -48,4 +66,5 @@ module.exports = {
   createProduct,
   deleteProduct,
   getProducts,
+  updateProduct
 };

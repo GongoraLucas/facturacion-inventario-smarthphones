@@ -42,7 +42,9 @@ export const ClientForm = () => {
           name="name"
           value={name}
           onChange={onInputChange}
+          fullWidth
           required
+          
         />
 
         <TextField
@@ -50,6 +52,7 @@ export const ClientForm = () => {
           name="email"
           value={email}
           onChange={onInputChange}
+          fullWidth
           type="email"
         />
 
@@ -58,6 +61,7 @@ export const ClientForm = () => {
           name="cedula"
           value={cedula}
           onChange={onInputChange}
+          fullWidth
           required
           inputProps={{ maxLength: 10, pattern: '[0-9]{10}' }}
           helperText="Debe contener exactamente 10 dígitos"

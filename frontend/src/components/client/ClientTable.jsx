@@ -9,16 +9,23 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Delete} from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteClientById } from '../../redux/thunks/clientThunks';
+import { confirmDeleteClient, deleteClientById } from '../../redux/thunks/clientThunks';
+import { useNavigate } from 'react-router-dom';
 
 export const ClientTable = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { data: clients, isLoading } = useSelector((state) => state.client);
 
   if (isLoading) return <Typography>Cargando clientes...</Typography>;
   if (!clients.length) return <Typography>No hay clientes registrados.</Typography>;
+
+  const goToUpdate = (id) => {
+    navigate(`/dashboard/clientes/update/${id}`);
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -38,7 +45,10 @@ export const ClientTable = () => {
               <TableCell>{client.cedula}</TableCell>
               <TableCell>{client.email}</TableCell>
               <TableCell align="right">
-                <IconButton color="error" onClick={() => dispatch(deleteClientById(client._id))}>
+                <IconButton color="info" onClick={() => goToUpdate(client._id)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton color="error" onClick={() => dispatch(confirmDeleteClient(client._id))}>
                   <Delete />
                 </IconButton>
               </TableCell>

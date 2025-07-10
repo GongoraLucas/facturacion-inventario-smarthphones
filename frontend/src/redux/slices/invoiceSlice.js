@@ -17,8 +17,11 @@ const invoiceSlice = createSlice({
     addInvoice: (state, action) => {
       state.data.push(action.payload);
     },
+    removeInvoice: (state, action) => {
+      state.data = state.data.filter((invoice) => invoice._id !== action.payload);
+    },
   },
 });
 
-export const { startLoadingInvoices, setInvoices, addInvoice } = invoiceSlice.actions;
+export const { startLoadingInvoices, setInvoices, addInvoice, removeInvoice} = invoiceSlice.actions;
 export default invoiceSlice.reducer;

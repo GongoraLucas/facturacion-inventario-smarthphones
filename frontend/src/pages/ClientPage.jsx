@@ -13,7 +13,7 @@ export const ClientPage = () => {
   }, [dispatch]);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" size={{xs:12,md:6}}>
       <Typography variant="h4" mb={4}>
         Gestión de Clientes
       </Typography>

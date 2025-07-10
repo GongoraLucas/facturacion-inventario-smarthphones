@@ -10,6 +10,11 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HomeIcon from '@mui/icons-material/Home';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PeopleIcon from '@mui/icons-material/People';
+import SmartphoneIcon from '@mui/icons-material/Smartphone';
 
 export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
   const location = useLocation();
@@ -26,6 +31,7 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
             navigate('/dashboard');
           }}
         >
+          <HomeIcon sx={{marginRight:2}}/>
           <ListItemText primary="Inicio" />
         </ListItemButton>
       </ListItem>
@@ -36,6 +42,7 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
             navigate('/dashboard/ventas');
           }}
         >
+          <AttachMoneyIcon sx={{marginRight:2}}/>
           <ListItemText primary="Ventas" />
         </ListItemButton>
       </ListItem>
@@ -46,6 +53,7 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
             navigate('/dashboard/clientes');
           }}
         >
+          <PeopleIcon sx={{marginRight:2}}/>
           <ListItemText primary="Clientes" />
         </ListItemButton>
       </ListItem>
@@ -60,6 +68,7 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
           navigate('/dashboard');
         }}
       >
+        <HomeIcon sx={{marginRight:2}}/>
         <ListItemText primary="Inicio" />
       </ListItemButton>
       <ListItem disablePadding>
@@ -67,6 +76,7 @@ export const Sidebar = ({ handleDrawerToggle, isMobile }) => {
           selected={isSelected('/dashboard/productos')}
           onClick={() => navigate('/dashboard/productos')}
         >
+          <SmartphoneIcon sx={{marginRight:2}}/>
           <ListItemText primary="Productos" />
         </ListItemButton>
       </ListItem>

@@ -43,12 +43,14 @@ export const ProductForm = () => {
           value={name}
           onChange={onInputChange}
           required
+          fullWidth
         />
         <TextField
           label="Descripción"
           name="description"
           value={description}
           onChange={onInputChange}
+          fullWidth
         />
         <TextField
           label="Precio"
@@ -57,7 +59,9 @@ export const ProductForm = () => {
           inputProps={{ min: 0, step: '0.01' }}
           value={price}
           onChange={onInputChange}
+           placeholder="100.00"
           required
+          fullWidth
         />
         <TextField
           label="Stock"
@@ -66,7 +70,10 @@ export const ProductForm = () => {
           inputProps={{ min: 0 }}
           value={stock}
           onChange={onInputChange}
+          placeholder='100'
+         
           required
+          fullWidth
         />
         <TextField
           label="Categoría"
@@ -74,6 +81,7 @@ export const ProductForm = () => {
           select
           value={category}
           onChange={onInputChange}
+          fullWidth
         >
           <MenuItem value="Xiaomi">Xiaomi</MenuItem>
           <MenuItem value="Samsung">Samsung</MenuItem>

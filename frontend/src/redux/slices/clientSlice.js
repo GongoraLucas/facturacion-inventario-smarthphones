@@ -19,6 +19,14 @@ const clientSlice = createSlice({
     addClient: (state, action) => {
       state.data.push(action.payload);
     },
+    updateClient: (state, action) => {
+      state.data = state.data.map((client) => {
+        if (client._id === action.payload._id) {
+          return action.payload;
+        }
+        return client;
+      });
+    },
     removeClient: (state, action) => {
       state.data = state.data.filter((c) => c._id !== action.payload);
     },
@@ -29,12 +37,7 @@ const clientSlice = createSlice({
   },
 });
 
-export const {
-  startLoadingClients,
-  setClients,
-  addClient,
-  removeClient,
-  setClientError,
-} = clientSlice.actions;
+export const { startLoadingClients, setClients, addClient, removeClient, setClientError, updateClient } =
+  clientSlice.actions;
 
 export default clientSlice.reducer;

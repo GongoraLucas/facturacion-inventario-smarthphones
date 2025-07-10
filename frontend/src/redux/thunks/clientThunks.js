@@ -5,6 +5,7 @@ import {
   addClient,
   removeClient,
   setClientError,
+  updateClient,
 } from '../slices/clientSlice';
 import { showSnackbar } from '../slices/uiSlice';
 
@@ -39,10 +40,38 @@ export const deleteClientById = (clientId) => {
     try {
       await api.delete(`/clients/${clientId}`);
       dispatch(removeClient(clientId));
-      dispatch(showSnackbar({ msg: 'Cliente eliminado', severity: 'info' }));
+      dispatch(showSnackbar({ msg: 'Cliente eliminado', severity: 'success' }));
     } catch (error) {
       dispatch(setClientError(error.message));
       dispatch(showSnackbar({ msg: 'Error al eliminar cliente', severity: 'error' }));
+    }
+  };
+};
+
+
+export const confirmDeleteClient = (clientId) => {
+  return async (dispatch) => {
+    dispatch(
+      showSnackbar({
+        msg: '¿Estás seguro de eliminar esta factura?',
+        severity: 'warning',
+        confirmation: true,
+        onAccept: () => dispatch(deleteClientById(clientId)),
+        onCancel: () => dispatch(showSnackbar({msg:"Se cancelo la eliminacion del cliente", severity:"info"})),
+      })
+    );
+  };
+};
+
+export const updateClientById = (clientId, updatedData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await api.put(`/clients/${clientId}`, updatedData);
+      dispatch(updateClient(data));
+      dispatch(showSnackbar({ msg: 'Cliente actualizado correctamente', severity: 'success' }));
+    } catch (error) {
+      dispatch(setClientError(error.message));
+      dispatch(showSnackbar({ msg: 'Error al actualizar cliente', severity: 'error' }));
     }
   };
 };

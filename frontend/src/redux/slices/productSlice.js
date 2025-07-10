@@ -19,6 +19,14 @@ const productSlice = createSlice({
     addProduct: (state, action) => {
       state.data.push(action.payload);
     },
+    updateProduct: (state,action) =>{
+      state.data = state.data.map((product=>{
+        if (product._id === action.payload._id){
+          return action.payload
+        }
+        return product
+      }))
+    },
     removeProduct: (state, action) => {
       state.data = state.data.filter((prod) => prod._id !== action.payload);
     },
@@ -33,6 +41,7 @@ export const {
   startLoadingProducts,
   setProducts,
   addProduct,
+  updateProduct,
   removeProduct,
   setProductError,
 } = productSlice.actions;

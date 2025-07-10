@@ -18,19 +18,19 @@ import { Bar } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo } from 'react';
 import { fetchProducts } from '../redux/thunks/productThunks';
+import SmartphoneIcon from '@mui/icons-material/Smartphone';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 export const DashboardAdmin = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const {data:products} = useSelector(state=>state.product)
-  useEffect(()=>{
-    dispatch(fetchProducts())
-
-  },[dispatch])
-  const productosBajoStock = useMemo(()=>{
-    return products.filter(product => product.stock <= 5 )
-  },[products])
+  const { data: products } = useSelector((state) => state.product);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+  const productosBajoStock = useMemo(() => {
+    return products.filter((product) => product.stock <= 5);
+  }, [products]);
 
   const kpis = [
     // { label: 'Ventas Totales', value: 345, color: 'primary' },
@@ -43,7 +43,7 @@ export const DashboardAdmin = () => {
     labels: ['Ene', 'Feb', 'Mar', 'May', 'Jun'],
     datasets: [
       {
-        label: 'Ventas Mensuales',
+        label: 'Smartphones',
         data: [45, 62, 48, 70, 90, 85],
         backgroundColor: theme.palette.primary.main,
       },
@@ -56,7 +56,7 @@ export const DashboardAdmin = () => {
       legend: { display: true },
       title: {
         display: true,
-        text: 'Historico de Ventas',
+        text: 'Ventas',
         font: { size: 18 },
       },
     },
@@ -96,7 +96,7 @@ export const DashboardAdmin = () => {
               }}
             >
               <CardContent>
-                <Typography variant="subtitle2" color="textSecondary">
+                <Typography variant="subtitle2" color="textSecondary" sx={{display:"flex", alignItems:"center"}}>
                   {kpi.label}
                 </Typography>
                 <Typography variant="h5">
@@ -107,10 +107,8 @@ export const DashboardAdmin = () => {
           </Grid>
         ))}
       </Grid>
-      <Box mt={5} size={{xs: 12, md: 6}}>
-        <Bar data={chartData} options={chartOptions}  />
-      </Box>
-      <Grid container spacing={3} mt={3}>
+
+      <Grid container size={{ xs: 12, md: 6 }} spacing={3} mt={3}>
         {/* <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="h6" gutterBottom>
             Productos más vendidos
@@ -151,7 +149,7 @@ export const DashboardAdmin = () => {
                 {productosRecientes.map((prod) => (
                   <TableRow key={prod.date}>
                     <TableCell>{prod.name}</TableCell>
-                    <TableCell>{prod.date}</TableCell>
+                    <TableCell>{new Date(prod.date).toLocaleDateString()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -159,6 +157,9 @@ export const DashboardAdmin = () => {
           </TableContainer>
         </Grid>
       </Grid>
+      <Box mt={5} size={{ xs: 12, md: 12 }}>
+        <Bar data={chartData} options={chartOptions} />
+      </Box>
     </Box>
   );
 };

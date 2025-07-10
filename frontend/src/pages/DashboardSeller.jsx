@@ -28,6 +28,7 @@ import { Line } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchInvoices } from '../redux/thunks/invoiceThunks';
 import { fetchClients } from '../redux/thunks/clientThunks';
+import PeopleIcon from '@mui/icons-material/People';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
@@ -54,8 +55,8 @@ export const DashboardSeller = () => {
 
   // KPIs simulados
   const kpis = [
-    { label: 'Ventas realizadas', value: invoices.length, color: 'primary' },
-    { label: 'Ingresos generados', value: ingresos, color: 'secondary' },
+    { label: 'Ventas realizadas 💲', value: invoices.length, color: 'primary' },
+    { label: 'Ingresos generados 💲', value: ingresos, color: 'secondary' },
     { label: 'Clientes atendidos', value: clientesAtendidos, color: 'success' },
   ];
 
@@ -115,8 +116,9 @@ export const DashboardSeller = () => {
               }}
             >
               <CardContent>
-                <Typography variant="subtitle2" color="textSecondary">
+                <Typography variant="subtitle2" color="textSecondary" sx={{display:"flex", alignItems:"center"}}>
                   {kpi.label}
+                  {kpi.label === "Clientes atendidos" && <PeopleIcon sx={{marginLeft:2}}/>}
                 </Typography>
                 <Typography variant="h5">
                   {typeof kpi.value === 'number' ? kpi.value.toLocaleString() : kpi.value}
@@ -127,13 +129,10 @@ export const DashboardSeller = () => {
         ))}
       </Grid>
 
-      {/* Gráfico */}
-      <Box mt={5}>
-        <Line data={chartData} options={chartOptions} />
-      </Box>
+     
 
       {/* Últimos clientes */}
-      <Box mt={5}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <Typography variant="h6" gutterBottom>
           Últimos clientes atendidos
         </Typography>
@@ -149,12 +148,16 @@ export const DashboardSeller = () => {
               {clientesRecientes.map((cli) => (
                 <TableRow key={cli.date}>
                   <TableCell>{cli.name}</TableCell>
-                  <TableCell>{cli.date}</TableCell>
+                  <TableCell>{new Date(cli.date).toLocaleDateString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+      </Grid>
+       {/* Gráfico */}
+      <Box mt={5} size={{ xs: 12, md: 6 }}>
+        <Line data={chartData} options={chartOptions} />
       </Box>
     </Box>
   );
